@@ -3,7 +3,7 @@
 
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import LoginButton from "@/app/_components/LoginButton";
+import LoginButton from "@/app/_components/LoginButton/index";
 import styles from "./page.module.css";
 
 export default function Home() {
