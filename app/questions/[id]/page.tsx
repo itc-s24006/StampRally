@@ -1,78 +1,85 @@
 "use client"
 
 import styles from "./page.module.css"
-import {useState} from "react";
+import React, {useMemo, useState} from "react";
+import QuestionPage from "@/app/_components/QuestionPage";
 
-export default function Question(id: number) {
-    type questionData = {
-        id: number,
-        password: string,
-        questionDescription:
-            {
-                title: string,
-                content: string,
-                answer: string,
-            }
-    }
+type QuestionProps = {
+    params: Promise<{
+        id: number; // 受け取る Props も数値 (number) で定義します。これが正解です。
+    }>
+}
 
-    const questionsData : questionData[] =[
+type questionData = {
+    id: number,
+    password: string,
+    questionDescription:
         {
-            id: 1,
-            password: "12345",
-            questionDescription: {
-                title: "第1問",
-                content: "*****",
-                answer: "***"
-            }
-        },
-        {
-            id: 2,
-            password: "123456",
-            questionDescription: {
-                title: "第2問",
-                content: "*****",
-                answer: "***"
-            }
+            title: string,
+            content: string,
+            answer: string,
         }
-    ]
+}
+
+const questionsData : questionData[] =[
+    {
+        id: 1,
+        password: "12345",
+        questionDescription: {
+            title: "第1問",
+            content: "*****",
+            answer: "***"
+        }
+    },
+    {
+        id: 2,
+        password: "123456",
+        questionDescription: {
+            title: "第2問",
+            content: "*****",
+            answer: "***"
+        }
+    }
+]
+
+export default function Question({ params }: QuestionProps) {
 
     const [inputPass, setInputPass] = useState('');
 
-    // 入力値が変更されるたびに実行されるハンドラ
     const handleChange = (event:React.ChangeEvent<HTMLInputElement>) => {
         // Stateを新しい入力値で更新
         setInputPass(event.target.value);
     };
 
-    const questions = JSON.parse(JSON.stringify(questionsData));
+    const unwrappedParams = React.use(params);
+    const id = Number(unwrappedParams.id)
 
-    questions.map((question: questionData) => {
-        if (question.id === id) {
-            const handleSubmit = () => {
-                if (question.password === inputPass) {
-                    return (
-                        <>
-                            <main>
-                                <div className={styles.question}>
-                                    <h1 className="text-2xl font-bold mb-6 bg-gray-200 p-2 rounded">問題を選択してください</h1>
-                                    <h1>{question.questionDescription.title}</h1>
-                                    <p>{question.questionDescription.content}</p>
-                                </div>
-                            </main>
-                        </>
-                    )
-                }
-            };
-            handleSubmit();
+    const questionToDisplay = useMemo(() => {
+        // question.id (number) === id (number) で比較
+        return questionsData.find(question => question.id === id);
+    }, [id]);
+
+    console.log(typeof id);
+
+    if (!questionToDisplay) return <h1>ページが存在しません</h1>
+
+    const handleSubmit = () => {
+        if (questionToDisplay.password === inputPass) {
+            <QuestionPage id={questionToDisplay.id} password={questionToDisplay.password} questionDescription={questionToDisplay.questionDescription} />
         }
-    }
-    )
-
-            return (
-                <>
-                    <div className={styles.question}>
-                        <h1>パスワードが違います</h1>
-                    </div>
-                </>
-            )
-    }
+        return <h1>パスワードが違います</h1>
+    };
+    return (
+        <>
+            <input
+                type="text"
+                value={inputPass}
+                onChange={handleChange}
+                placeholder="ここに入力してください"
+            />
+            <button onClick={handleSubmit}>
+                送信
+            </button>
+        </>
+    );
+}
