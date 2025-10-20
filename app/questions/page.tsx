@@ -1,8 +1,9 @@
 // app/questions/page.tsx
 "use client";
 import { useEffect, useState } from "react";
+import {Question} from "@/lib/types";
 export default function QuestionsPage() {
-    const [questions, setQuestions] = useState<any[]>([]);
+    const [questions, setQuestions] = useState<Question[]>([]);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         const fetchQuestions = async () => {
