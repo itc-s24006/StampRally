@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Question } from "@/lib/types";
 import Card from "@/app/_components/Card";
+import LogoutButton from "@/app/_components/LogoutBotton";
 
 export default function QuestionsPage() {
     const [questions, setQuestions] = useState<Question[]>([]);
@@ -37,6 +38,7 @@ export default function QuestionsPage() {
                     <Card id={q.id} />
                 </button>
                 ))}
+            <LogoutButton />
             </div>
         </main>
     );

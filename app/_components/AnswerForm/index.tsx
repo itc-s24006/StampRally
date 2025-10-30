@@ -30,7 +30,7 @@ export default function AnswerForm({data}: dataType) {
         formData.append("questionId", String(data.id));
         formData.append("userAnswer", selected);
         // 仮のUUID（本番は認証情報から取得してください）
-        // formData.append("userId", "00000000-0000-0000-0000-000000000000");
+        formData.append("userId", "00000000-0000-0000-0000-000000000000");
 
         try {
             const res = await fetch("/api/record/answer", {
