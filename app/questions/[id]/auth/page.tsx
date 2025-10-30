@@ -1,5 +1,4 @@
 // パスワード認証画面
-
 "use client";
 
 import { use } from "react";
@@ -53,7 +52,7 @@ export default function PasswordAuthPage({ params }: PasswordAuthPageProps) {
                     placeholder="パスワード"
                 />
                 <br />
-                <button type="submit" className="btn btn-outline-primary">確定</button>
+                <button type="submit" className="btn btn-outline-secondary">確定</button>
             </form>
             {errorMessage && <p style={{ color: "red", marginTop: "10px" }}>{errorMessage}</p>}
         </div>
