@@ -1,13 +1,15 @@
-// types/next-auth.d.ts
-import NextAuth from "next-auth"
+// NextAuthの型拡張を行う（session.user.idを認識させる）
+
+import { DefaultSession, DefaultUser } from "next-auth";
 
 declare module "next-auth" {
     interface Session {
-        user: {
-            name?: string | null
-            email?: string | null
-            image?: string | null
-            id?: string | null
-        }
+        user: DefaultSession["user"] & {
+            id: string;
+        };
+    }
+
+    interface User extends DefaultUser {
+        id: string;
     }
 }
