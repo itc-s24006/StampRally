@@ -39,7 +39,7 @@ export default function PasswordAuthPage({ params }: PasswordAuthPageProps) {
     };
 
     return (
-        <div className="top-50">
+        <div className="top-50 text-center">
             <br />
             <h2 className="text-center">{resolvedParams.id} 階の問題パスワードを入力してください</h2>
             <br />
