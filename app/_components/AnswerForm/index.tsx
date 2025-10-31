@@ -42,8 +42,7 @@ export default function AnswerForm({data}: dataType) {
             });
             const json = await res.json();
             if (json.success) {
-                setResult(json.message);
-                if(result === "残念...不正解") {
+                if(!json.is_correct) {
                     router.push('http://localhost:3000/questions/incorrect')
                     return;
                 }
